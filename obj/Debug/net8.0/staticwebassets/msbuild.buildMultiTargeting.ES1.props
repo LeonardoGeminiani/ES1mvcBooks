@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="../build/ES1.props" />
+</Project>
