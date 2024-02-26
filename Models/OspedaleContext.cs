@@ -10,9 +10,8 @@ public class OspedaleContext : DbContext
     public DbSet<Terapia> Terapie {get; set;}
     public DbSet<Visita> visite {get; set;}
 
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    {
-        // sqlite
+    public OspedaleContext(DbContextOptions<OspedaleContext> options) : base(options) {
+        
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)

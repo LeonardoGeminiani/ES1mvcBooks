@@ -1,7 +1,16 @@
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ??
+                            throw new InvalidOperationException("Connection string (DefaultConnection) Not found");
+
+builder.Services.AddDbContext<OspedaleContext>(options => {
+    options.UseSqlite(connectionString);
+});
 
 var app = builder.Build();
 
