@@ -217,7 +217,7 @@ namespace ES1.Migrations
 
                     b.HasIndex("PazienteCF");
 
-                    b.ToTable("visite");
+                    b.ToTable("Visite");
                 });
 
             modelBuilder.Entity("ES1.Models.Farmaco", b =>

@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ES1.Migrations
 {
     [DbContext(typeof(OspedaleContext))]
-    [Migration("20240226093120_FirstCreation")]
+    [Migration("20240226093629_FirstCreation")]
     partial class FirstCreation
     {
         /// <inheritdoc />
@@ -220,7 +220,7 @@ namespace ES1.Migrations
 
                     b.HasIndex("PazienteCF");
 
-                    b.ToTable("visite");
+                    b.ToTable("Visite");
                 });
 
             modelBuilder.Entity("ES1.Models.Farmaco", b =>

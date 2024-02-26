@@ -8,7 +8,7 @@ public class OspedaleContext : DbContext
     public DbSet<Paziente> Pazienti {get; set;}
     public DbSet<Reparto> Reparti {get; set;}
     public DbSet<Terapia> Terapie {get; set;}
-    public DbSet<Visita> visite {get; set;}
+    public DbSet<Visita> Visite {get; set;}
 
     public OspedaleContext(DbContextOptions<OspedaleContext> options) : base(options) {
         

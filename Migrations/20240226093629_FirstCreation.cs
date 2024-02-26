@@ -95,7 +95,7 @@ namespace ES1.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "visite",
+                name: "Visite",
                 columns: table => new
                 {
                     VisitaId = table.Column<int>(type: "INTEGER", nullable: false)
@@ -114,15 +114,15 @@ namespace ES1.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_visite", x => x.VisitaId);
+                    table.PrimaryKey("PK_Visite", x => x.VisitaId);
                     table.ForeignKey(
-                        name: "FK_visite_Medici_MedicoId",
+                        name: "FK_Visite_Medici_MedicoId",
                         column: x => x.MedicoId,
                         principalTable: "Medici",
                         principalColumn: "MedicoId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_visite_Pazienti_PazienteCF",
+                        name: "FK_Visite_Pazienti_PazienteCF",
                         column: x => x.PazienteCF,
                         principalTable: "Pazienti",
                         principalColumn: "CF");
@@ -164,13 +164,13 @@ namespace ES1.Migrations
                 column: "RepartoId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_visite_MedicoId",
-                table: "visite",
+                name: "IX_Visite_MedicoId",
+                table: "Visite",
                 column: "MedicoId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_visite_PazienteCF",
-                table: "visite",
+                name: "IX_Visite_PazienteCF",
+                table: "Visite",
                 column: "PazienteCF");
         }
 
@@ -181,7 +181,7 @@ namespace ES1.Migrations
                 name: "Farmaci");
 
             migrationBuilder.DropTable(
-                name: "visite");
+                name: "Visite");
 
             migrationBuilder.DropTable(
                 name: "Terapie");
