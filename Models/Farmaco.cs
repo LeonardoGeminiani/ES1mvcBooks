@@ -12,6 +12,6 @@ public class Farmaco
     public DateOnly Scadenza { get; set; }
 
     public string CF {get; set;}
-    public Terapia Terapia {get; set;}
+    public virtual ICollection<Terapia> Terapie {get; set;}
 
 }

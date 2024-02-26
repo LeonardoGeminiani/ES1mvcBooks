@@ -40,15 +40,7 @@ namespace ES1.Migrations
                     b.Property<DateOnly>("Scadenza")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("TerapiaCF")
-                        .HasColumnType("TEXT");
-
-                    b.Property<int?>("TerapiaFarmacoId")
-                        .HasColumnType("INTEGER");
-
                     b.HasKey("FarmacoId");
-
-                    b.HasIndex("TerapiaCF", "TerapiaFarmacoId");
 
                     b.ToTable("Farmaci");
                 });
@@ -169,6 +161,8 @@ namespace ES1.Migrations
 
                     b.HasKey("CF", "FarmacoId");
 
+                    b.HasIndex("FarmacoId");
+
                     b.ToTable("Terapie");
                 });
 
@@ -220,15 +214,6 @@ namespace ES1.Migrations
                     b.ToTable("Visite");
                 });
 
-            modelBuilder.Entity("ES1.Models.Farmaco", b =>
-                {
-                    b.HasOne("ES1.Models.Terapia", "Terapia")
-                        .WithMany("Farmaci")
-                        .HasForeignKey("TerapiaCF", "TerapiaFarmacoId");
-
-                    b.Navigation("Terapia");
-                });
-
             modelBuilder.Entity("ES1.Models.Paziente", b =>
                 {
                     b.HasOne("ES1.Models.Reparto", "reparto")
@@ -242,11 +227,21 @@ namespace ES1.Migrations
 
             modelBuilder.Entity("ES1.Models.Terapia", b =>
                 {
-                    b.HasOne("ES1.Models.Paziente", null)
+                    b.HasOne("ES1.Models.Paziente", "Paziente")
                         .WithMany("Terapie")
                         .HasForeignKey("CF")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("ES1.Models.Farmaco", "Farmaco")
+                        .WithMany("Terapie")
+                        .HasForeignKey("FarmacoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Farmaco");
+
+                    b.Navigation("Paziente");
                 });
 
             modelBuilder.Entity("ES1.Models.Visita", b =>
@@ -266,6 +261,11 @@ namespace ES1.Migrations
                     b.Navigation("Paziente");
                 });
 
+            modelBuilder.Entity("ES1.Models.Farmaco", b =>
+                {
+                    b.Navigation("Terapie");
+                });
+
             modelBuilder.Entity("ES1.Models.Paziente", b =>
                 {
                     b.Navigation("Terapie");
@@ -276,11 +276,6 @@ namespace ES1.Migrations
             modelBuilder.Entity("ES1.Models.Reparto", b =>
                 {
                     b.Navigation("Pazienti");
-                });
-
-            modelBuilder.Entity("ES1.Models.Terapia", b =>
-                {
-                    b.Navigation("Farmaci");
                 });
 #pragma warning restore 612, 618
         }

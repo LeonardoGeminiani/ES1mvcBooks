@@ -10,7 +10,6 @@ public class Terapia
     public DateTime DataFine { get; set; }
     public string Posologia { get; set; }
 
-    public Paziente Paziente;
-
-    public virtual ICollection<Farmaco> Farmaci {get; set;}
+    public Paziente Paziente {get; set;}
+    public Farmaco Farmaco {get; set;}
 }

@@ -12,6 +12,24 @@ namespace ES1.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
+                name: "Farmaci",
+                columns: table => new
+                {
+                    FarmacoId = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Nome = table.Column<string>(type: "TEXT", nullable: true),
+                    Descrizione = table.Column<string>(type: "TEXT", nullable: true),
+                    PrincipioAttivo = table.Column<string>(type: "TEXT", nullable: true),
+                    QuantitaScatole = table.Column<int>(type: "INTEGER", nullable: false),
+                    Scadenza = table.Column<DateOnly>(type: "TEXT", nullable: false),
+                    CF = table.Column<string>(type: "TEXT", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Farmaci", x => x.FarmacoId);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Medici",
                 columns: table => new
                 {
@@ -87,6 +105,12 @@ namespace ES1.Migrations
                 {
                     table.PrimaryKey("PK_Terapie", x => new { x.CF, x.FarmacoId });
                     table.ForeignKey(
+                        name: "FK_Terapie_Farmaci_FarmacoId",
+                        column: x => x.FarmacoId,
+                        principalTable: "Farmaci",
+                        principalColumn: "FarmacoId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
                         name: "FK_Terapie_Pazienti_CF",
                         column: x => x.CF,
                         principalTable: "Pazienti",
@@ -128,40 +152,15 @@ namespace ES1.Migrations
                         principalColumn: "CF");
                 });
 
-            migrationBuilder.CreateTable(
-                name: "Farmaci",
-                columns: table => new
-                {
-                    FarmacoId = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    Nome = table.Column<string>(type: "TEXT", nullable: true),
-                    Descrizione = table.Column<string>(type: "TEXT", nullable: true),
-                    PrincipioAttivo = table.Column<string>(type: "TEXT", nullable: true),
-                    QuantitaScatole = table.Column<int>(type: "INTEGER", nullable: false),
-                    Scadenza = table.Column<DateOnly>(type: "TEXT", nullable: false),
-                    CF = table.Column<string>(type: "TEXT", nullable: true),
-                    TerapiaCF = table.Column<string>(type: "TEXT", nullable: true),
-                    TerapiaFarmacoId = table.Column<int>(type: "INTEGER", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Farmaci", x => x.FarmacoId);
-                    table.ForeignKey(
-                        name: "FK_Farmaci_Terapie_TerapiaCF_TerapiaFarmacoId",
-                        columns: x => new { x.TerapiaCF, x.TerapiaFarmacoId },
-                        principalTable: "Terapie",
-                        principalColumns: new[] { "CF", "FarmacoId" });
-                });
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Farmaci_TerapiaCF_TerapiaFarmacoId",
-                table: "Farmaci",
-                columns: new[] { "TerapiaCF", "TerapiaFarmacoId" });
-
             migrationBuilder.CreateIndex(
                 name: "IX_Pazienti_RepartoId",
                 table: "Pazienti",
                 column: "RepartoId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Terapie_FarmacoId",
+                table: "Terapie",
+                column: "FarmacoId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Visite_MedicoId",
@@ -178,13 +177,13 @@ namespace ES1.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Farmaci");
+                name: "Terapie");
 
             migrationBuilder.DropTable(
                 name: "Visite");
 
             migrationBuilder.DropTable(
-                name: "Terapie");
+                name: "Farmaci");
 
             migrationBuilder.DropTable(
                 name: "Medici");
